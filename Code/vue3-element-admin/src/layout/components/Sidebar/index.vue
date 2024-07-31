@@ -29,38 +29,68 @@ const data = [
   {
     path: "/TestManage",
     component: "Layout",
-    name: "/TestManage",
     meta: {
-      title: "测试管理",
       icon: "el-icon-ElementPlus",
       hidden: false,
-      alwaysShow: true,
+      alwaysShow: false,
       params: null,
     },
+    children: [
+      {
+        path: "testmanage",
+        meta: {
+          title: "测试管理",
+          icon: "el-icon-ElementPlus",
+          hidden: false,
+          alwaysShow: false,
+          params: null,
+        },
+      },
+    ],
   },
   {
     path: "/ResultDisplay",
     component: "Layout",
-    name: "/ResultDisplay",
     meta: {
-      title: "查看结果",
       icon: "el-icon-ElementPlus",
       hidden: false,
-      alwaysShow: true,
+      alwaysShow: false,
       params: null,
     },
+    children: [
+      {
+        path: "resultdisplay",
+        meta: {
+          title: "结果展示",
+          icon: "el-icon-ElementPlus",
+          hidden: false,
+          alwaysShow: false,
+          params: null,
+        },
+      },
+    ],
   },
   {
     path: "/DatasetManage",
     component: "Layout",
-    name: "/DatasetManage",
     meta: {
-      title: "题库管理",
       icon: "el-icon-ElementPlus",
       hidden: false,
-      alwaysShow: true,
+      alwaysShow: false,
       params: null,
     },
+    children: [
+      {
+        path: "datasetmanage",
+        meta: {
+          title: "数据管理",
+          icon: "el-icon-ElementPlus",
+          hidden: false,
+          alwaysShow: false,
+          params: null,
+        },
+      },
+    ],
   },
 ];
 const sidebarLogo = computed(() => settingsStore.sidebarLogo);

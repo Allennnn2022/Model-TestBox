@@ -128,14 +128,17 @@ function hasOneShowingChild(
  */
 function resolvePath(routePath: string) {
   if (isExternal(routePath)) {
+    console.info("item:PATH is External");
     return routePath;
   }
   if (isExternal(props.basePath)) {
+    console.info("item:PATH is External");
     return props.basePath;
   }
 
   // 完整路径(/system/user) = 父级路径(/system) + 路由路径(user)
   const fullPath = path.resolve(props.basePath, routePath);
+  console.info("item: FULLPATH is" + fullPath);
   return fullPath;
 }
 </script>

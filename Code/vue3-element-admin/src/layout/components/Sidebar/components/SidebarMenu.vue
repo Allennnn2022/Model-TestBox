@@ -61,6 +61,7 @@ function resolvePath(routePath: string) {
 
   // 完整绝对路径 = 父级路径(/system) + 路由路径(/user)
   const fullPath = path.resolve(props.basePath, routePath);
+  console.info("Menu: FULLPATH is" + fullPath);
   return fullPath;
 }
 </script>

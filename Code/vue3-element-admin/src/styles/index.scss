@@ -1,10 +1,7 @@
 @use "./reset";
 
-.app-container {
-  padding: 15px;
-}
-
-.search-container {
+.titlebar {
+  height: 150px;
   padding: 18px 0 0 10px;
   margin-bottom: 10px;
   background-color: var(--el-bg-color-overlay);

@@ -6,6 +6,57 @@ export const Layout = () => import("@/layout/index.vue");
 // 静态路由
 export const constantRoutes: RouteRecordRaw[] = [
   {
+    path: "/TestManage",
+    component: Layout,
+    name: "/TestManage",
+    meta: {
+      title: "",
+      icon: "el-icon-ElementPlus",
+    },
+    children: [
+      {
+        path: "testmanage",
+        component: () => import("@/views/TestManage/index.vue"),
+        name: " TestManage",
+        meta: { title: "测试管理" },
+      },
+    ],
+  },
+  {
+    path: "/ResultDisplay",
+    component: Layout,
+    name: "/ResultDisplay",
+    meta: {
+      title: "",
+      icon: "el-icon-ElementPlus",
+    },
+    children: [
+      {
+        path: "resultdisplay",
+        component: () => import("@/views/ResultDisplay/index.vue"),
+        name: "ResultDisplay",
+        meta: { title: "结果展示" },
+      },
+    ],
+  },
+  {
+    path: "/DatasetManage",
+    component: Layout,
+    name: "/DatasetManage",
+    meta: {
+      title: "",
+      icon: "el-icon-ElementPlus",
+    },
+    children: [
+      {
+        path: "datasetmanage",
+        component: () => import("@/views//DatasetManage/index.vue"),
+        name: "DatasetManage",
+        meta: { title: "数据管理" },
+      },
+    ],
+  },
+  {
     path: "/redirect",
     component: Layout,
     meta: { hidden: true },
@@ -22,7 +73,6 @@ export const constantRoutes: RouteRecordRaw[] = [
     component: () => import("@/views/login/index.vue"),
     meta: { hidden: true },
   },
-
   {
     path: "/",
     name: "/",
