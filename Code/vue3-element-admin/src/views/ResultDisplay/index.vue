@@ -27,7 +27,7 @@
         </el-table>
       </div>
       <div class="taskInfo" :ref="task_name">
-        <!-- <TaskInfoLink /> -->
+        <TaskInfoLink />
       </div>
     </div>
   </div>

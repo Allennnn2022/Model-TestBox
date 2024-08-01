@@ -81,11 +81,13 @@
   padding-left: 10px;
   padding-right: 10px;
   display: inline-block;
+  vertical-align: top;
 }
 .taskInfo {
   height: 100%;
   width: 70%;
   display: inline-block;
+  vertical-align: top;
 }
 
 .table-container > .el-card__header {
