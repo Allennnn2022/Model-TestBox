@@ -119,14 +119,12 @@
               align="center"
               prop="nickname"
             />
-
             <el-table-column
               label="性别"
               width="100"
               align="center"
               prop="genderLabel"
             />
-
             <el-table-column
               label="部门"
               width="120"
@@ -139,7 +137,6 @@
               prop="mobile"
               width="120"
             />
-
             <el-table-column label="状态" align="center" prop="status">
               <template #default="scope">
                 <el-tag :type="scope.row.status == 1 ? 'success' : 'info'">
@@ -188,7 +185,6 @@
               </template>
             </el-table-column>
           </el-table>
-
           <pagination
             v-if="total > 0"
             v-model:total="total"
@@ -374,6 +370,7 @@ function handleQuery() {
       console.log("handleQuery", data);
       pageData.value = data.list;
       total.value = data.total;
+      console.log("pageData.value", pageData.value);
     })
     .finally(() => {
       loading.value = false;

@@ -7,6 +7,8 @@ export {}
 
 declare module "vue" {
   export interface GlobalComponents {
+    TaskInfoLink: (typeof import("./../views/ResultDisplay/components/TaskInfoLink.vue"))["default"];
+    TaskInfo: (typeof import("./../views/ResultDisplay/components/taskinfo.vue"))["default"];
     AppLink: (typeof import("./../components/AppLink/index.vue"))["default"];
     AppMain: (typeof import("./../layout/components/AppMain/index.vue"))["default"];
     VisitTrend: (typeof import("./../views/dashboard/components/VisitTrend.vue"))["default"];

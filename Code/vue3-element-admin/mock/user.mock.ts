@@ -80,6 +80,27 @@ export default defineMock([
       msg: "一切ok",
     },
   },
+  {
+    url: "users/TaskShow",
+    method: ["GET"],
+    body: {
+      code: "00000",
+      data: [
+        { name: "Task1", state: "running" },
+        { name: "Task2", state: "starting" },
+      ],
+      msg: "一切ok",
+    },
+  },
+  {
+    url: "users/TaskInfo",
+    method: ["GET"],
+    body: {
+      code: "00000",
+      data: [{ state: "running" }, { state: "finished", escapeRate: "1%" }],
+      msg: "一切ok",
+    },
+  },
 
   // 新增用户
   {

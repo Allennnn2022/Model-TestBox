@@ -27,6 +27,47 @@ const settingsStore = useSettingsStore();
 // const permissionStore = usePermissionStore();
 const data = [
   {
+    path: "/system",
+    component: "Layout",
+    redirect: "/system/user",
+    name: "/system",
+    meta: {
+      title: "系统管理",
+      icon: "system",
+      hidden: false,
+      alwaysShow: false,
+      params: null,
+    },
+    children: [
+      {
+        path: "user",
+        component: "system/user/index",
+        name: "User",
+        meta: {
+          title: "用户管理",
+          icon: "el-icon-User",
+          hidden: false,
+          keepAlive: true,
+          alwaysShow: false,
+          params: null,
+        },
+      },
+      {
+        path: "role",
+        component: "system/role/index",
+        name: "Role",
+        meta: {
+          title: "角色管理",
+          icon: "role",
+          hidden: false,
+          keepAlive: true,
+          alwaysShow: false,
+          params: null,
+        },
+      },
+    ],
+  },
+  {
     path: "/TestManage",
     component: "Layout",
     meta: {

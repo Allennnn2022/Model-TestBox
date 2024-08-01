@@ -23,7 +23,7 @@ import { SizeEnum } from "@/enums/SizeEnum";
 
 const appStore = useAppStore();
 const settingsStore = useSettingsStore();
-
+const SERVER_URL = "/api/v1/taskmanage";
 const locale = computed(() => appStore.locale);
 const size = computed(() => appStore.size as SizeEnum);
 const watermarkEnabled = computed(() => settingsStore.watermarkEnabled);
