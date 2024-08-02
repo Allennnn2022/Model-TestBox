@@ -2,13 +2,13 @@
   <div class="background">
     <div class="titlebar">
       <p class="title">任务管理</p>
-      <div class="right">
-        <button class="taskCreateButton">任务创建</button>
+      <div class="titlebarrightbutton">
+        <button @click="taskcreate" class="taskCreateButton">任务创建</button>
         <button class="returnButton">返回</button>
       </div>
     </div>
     <div class="taskbar">
-      <div class="tasklist">
+      <div class="tasklistbar">
         <p class="tasktitle">任务名称</p>
         <p class="tasktitle">任务状态</p>
         <el-table
@@ -26,8 +26,47 @@
           />
         </el-table>
       </div>
-      <div class="taskInfo" :ref="task_name">
-        <TaskInfoLink />
+      <div class="taskInfobar">
+        <router-view v-if="taskIsSelected">
+          <div class="basic-container">
+            <p class="taskInfoTitle">任务详情：{{ Task_name }}</p>
+            <div class="taskInfobarrightbutton">
+              <button @click="taskexec" class="taskCreateButton">
+                任务执行
+              </button>
+              <button @click="taskdele" class="taskdeleteButton">删除</button>
+            </div>
+          </div>
+          <div class="taskInfo">
+            <div class="taskInfoUp">
+              <p class="span1">{{ Test_name }}</p>
+              <p class="span2">当前状态：{{ taskInfo?.state }}</p>
+              <p class="span3">越狱率：{{ taskInfo?.escapeRate }}</p>
+              <div class="span4" v-if="finished">
+                <button @click="resultDownload">结果下载</button>
+              </div>
+            </div>
+            <div class="divide-lightgrey"></div>
+            <div class="taskInfoDown">
+              <div class="taskModel">
+                <thead font-550>目标模型</thead>
+                <td>目sssssssssssssaaaaaaaaaaaa11</td>
+              </div>
+              <div class="taskDataset">
+                <thead font-550>数据集</thead>
+                <td>目sssssssssssssaaaaaaaaaaaa11</td>
+              </div>
+              <div v-bind="taskInfo" class="taskEval">
+                <thead font-550>评估器</thead>
+                <td>{{ taskInfo?.state }}</td>
+              </div>
+              <div class="taskAttackType">
+                <thead font-550>攻击类型</thead>
+                <td>幻觉攻击</td>
+              </div>
+            </div>
+          </div>
+        </router-view>
       </div>
     </div>
   </div>
@@ -35,21 +74,79 @@
 
 <script setup lang="ts">
 defineOptions({
-  name: "Menu",
+  name: "TaskManage",
   inheritAttrs: false,
 });
 
 import MenuAPI, { MenuQuery, MenuForm, MenuVO } from "@/api/menu";
 import { MenuTypeEnum } from "@/enums/MenuTypeEnum";
-import TaskAPI, { Tasklist } from "@/api/taskmanage";
-const Suite_name = "11";
+import TaskAPI, { TaskInfo, Tasklist } from "@/api/taskmanage";
+
 const TaskListData = ref<Tasklist[]>();
 const loading = ref(false);
-const task_name = ref<string | undefined>();
+const Task_name = ref<string | undefined>();
+const taskIsSelected = ref(false);
+const taskInfo = ref<TaskInfo>();
+const Suite_name = "11";
+const Test_name = "test1";
+const finished = ref(false);
+const resultDownloadURL = ref<string>();
+function taskcreate() {
+  TaskAPI.TaskCreate({
+    Suite_name: Suite_name,
+    Test_name: Test_name,
+    Task_name: Task_name.value,
+  })
+    .then((response) => {
+      console.info("TaskDele result:", response);
+    })
+    .catch((err) => {
+      console.info("TaskDele error", err);
+    });
+}
+function taskdele() {
+  TaskAPI.TaskDele({ Task_name: Task_name.value })
+    .then((response) => {
+      console.info("TaskDele result:", response);
+    })
+    .catch((err) => {
+      console.info("TaskDele error", err);
+    });
+}
+function taskexec() {
+  TaskAPI.TaskExec({ Task_name: Task_name.value })
+    .then((response) => {
+      console.info("TaskExec result:", response);
+    })
+    .catch((err) => {
+      console.info("TaskExec error", err);
+    });
+}
+function resultDownload() {
+  TaskAPI.TaskResult({ Task_name: Task_name.value })
+    .then((URL) => {
+      resultDownloadURL.value = URL;
+      console.info("TaskResultDownloadURL", URL);
+    })
+    .catch((err) => {
+      console.info("TaskResultDownload error", err);
+    });
+}
 
 function handleRowClick(row: Tasklist) {
-  task_name.value = row.name;
-  console.info("handleRowClick-----------------", task_name.value);
+  Task_name.value = row.name;
+  taskIsSelected.value = true;
+  TaskAPI.gettaskinfo({ Task_name: Task_name.value })
+    .then((data) => {
+      taskInfo.value = data;
+      if (taskInfo.value.state == "finished") {
+        finished.value = true;
+      }
+    })
+    .catch((err) => {
+      console.info(" handleRowClick error", err);
+    });
+  fetchData();
 }
 
 function fetchData() {
@@ -203,5 +300,23 @@ onMounted(() => {
 <style>
 .el-table .el-table__row > td {
   border-bottom: none;
+}
+.basic-container {
+  padding-left: 30px;
+  padding-right: 15px;
+  padding-top: 15px;
+}
+p {
+  margin: 0;
+  display: inline-block;
+}
+td {
+  padding-top: 20px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  max-width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+  max-height: 100%;
 }
 </style>

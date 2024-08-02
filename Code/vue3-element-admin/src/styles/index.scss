@@ -14,17 +14,30 @@
 }
 .title {
   display: inline-block;
-  width: 15%;
   margin: 0;
-  width: max-content;
+  width: 15%;
   font-size: 25px;
   font-weight: 600;
 }
-.right {
+.titlebarrightbutton {
   width: 85%;
   display: inline-block;
-  text-align: end;
+  text-align: right;
   margin: 0;
+  padding-right: 20px;
+}
+.taskInfoTitle {
+  display: inline-block;
+  font-size: 17px;
+  font-weight: 580;
+  width: 50%;
+  margin: 0;
+  min-width: max-content;
+}
+.taskInfobarrightbutton {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
 }
 .returnButton {
   display: inline-block;
@@ -46,6 +59,15 @@
   width: 105px;
   height: 35px;
   border-color: rgb(71, 160, 250);
+  margin-left: 15px;
+}
+.taskdeleteButton {
+  display: inline-block;
+  color: white;
+  background-color: rgb(231, 92, 106);
+  width: 85px;
+  height: 35px;
+  font-size: 15px;
   margin-left: 15px;
 }
 .titlebar {
@@ -73,7 +95,7 @@
   border-top: 3px solid var(--el-border-color-light);
   border-color: lightgrey;
 }
-.tasklist {
+.tasklistbar {
   height: 100%;
   width: 30%;
   border-right: 3px solid var(--el-border-color-light);
@@ -83,17 +105,83 @@
   display: inline-block;
   vertical-align: top;
 }
-.taskInfo {
+.taskInfobar {
   height: 100%;
   width: 70%;
   display: inline-block;
   vertical-align: top;
 }
-
+.taskInfo {
+  margin-top: 15px;
+  margin-left: 32px;
+  margin-right: 18px;
+  height: 200px;
+  box-shadow: var(--el-box-shadow-light);
+  border-radius: 5px;
+  padding: 10px;
+}
+.taskInfoUp {
+  padding: 15px;
+  height: 30%;
+}
+.divide-lightgrey {
+  border: 1px;
+  border-color: lightgrey;
+  margin-inline: 20px;
+  border-style: solid;
+}
+.taskInfoDown {
+  padding: 15px;
+  height: 70%;
+}
+.taskModel {
+  display: inline-block;
+  width: 23%;
+  height: 100%;
+}
+.taskDataset {
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+}
+.taskEval {
+  display: inline-block;
+  width: 14%;
+  height: 100%;
+}
+.taskAttackType {
+  display: inline-block;
+  width: 13%;
+  height: 100%;
+}
 .table-container > .el-card__header {
   padding: calc(var(--el-card-padding) - 8px) var(--el-card-padding);
 }
-
+.taskInfoUp > p {
+  font-size: 14px;
+  margin-right: 65px;
+  //display: flex;
+}
+.taskInfoUp > .span1 {
+  width: 120px;
+}
+.taskInfoUp > .span2 {
+  width: 150px;
+}
+.taskInfoUp > .span3 {
+  width: 120px;
+}
+.taskInfoUp > .span4 {
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+}
+.span4 > button {
+  width: 70px;
+  height: 30px;
+  color: grey;
+  border: lightgrey;
+}
 .link-type,
 .link-type:focus {
   color: #337ab7;

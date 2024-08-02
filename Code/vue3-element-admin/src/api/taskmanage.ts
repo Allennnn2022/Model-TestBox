@@ -11,10 +11,38 @@ class TaskAPI {
     });
   }
   static gettaskinfo(query: object) {
-    return request<any, TaskInfo[]>({
+    return request<any, TaskInfo>({
       //url: `${SERVER_URL}/user`,
       url: `${USER_BASE_URL}/TaskInfo`,
       method: "get",
+      params: query,
+    });
+  }
+  static TaskResult(query: object) {
+    return request<any, string>({
+      url: `${USER_BASE_URL}/TaskResult`,
+      method: "get",
+      params: query,
+    });
+  }
+  static TaskExec(query: object) {
+    return request<any, string>({
+      url: `${USER_BASE_URL}/TaskExec`,
+      method: "post",
+      params: query,
+    });
+  }
+  static TaskDele(query: object) {
+    return request<any, string>({
+      url: `${USER_BASE_URL}/TaskDele`,
+      method: "post",
+      params: query,
+    });
+  }
+  static TaskCreate(query: object) {
+    return request<any, string>({
+      url: `${USER_BASE_URL}/TaskCreate`,
+      method: "post",
       params: query,
     });
   }
@@ -31,4 +59,8 @@ export interface TaskInfo {
   state?: string;
   // 越狱率
   escapeRate?: string;
+}
+export interface postReturn {
+  code?: string;
+  msg?: string;
 }

@@ -97,11 +97,46 @@ export default defineMock([
     method: ["GET"],
     body: {
       code: "00000",
-      data: [{ state: "running" }, { state: "finished", escapeRate: "1%" }],
+      data: { state: "finished", escapeRate: "100%" },
       msg: "一切ok",
     },
   },
-
+  {
+    url: "users/TaskResult",
+    method: ["GET"],
+    body: {
+      code: "00000",
+      data: { Task_Result: "www.baidu.com" },
+      msg: "一切ok",
+    },
+  },
+  {
+    url: "users/TaskExec",
+    method: ["POST"],
+    body({ query }) {
+      return {
+        msg: "Task " + query.Task_name + " Execute Succseefully",
+      };
+    },
+  },
+  {
+    url: "users/TaskDele",
+    method: ["POST"],
+    body({ query }) {
+      return {
+        msg: "Task" + query.Task_name + " Delete Succseefully",
+      };
+    },
+  },
+  {
+    url: "users/TaskCreate",
+    method: ["POST"],
+    body({ query }) {
+      return {
+        msg: "Task" + query.Task_name + " Create Succseefully",
+      };
+    },
+  },
   // 新增用户
   {
     url: "users",
