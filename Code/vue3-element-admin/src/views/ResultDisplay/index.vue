@@ -3,8 +3,9 @@
     <div class="titlebar">
       <p class="title">任务管理</p>
       <div class="titlebarrightbutton">
-        <button @click="taskcreate" class="taskCreateButton">任务创建</button>
-        <button class="returnButton">返回</button>
+        <button @click="handleTaskCreate" class="taskCreateButton">
+          任务创建
+        </button>
       </div>
     </div>
     <div class="taskbar">
@@ -29,17 +30,19 @@
       <div class="taskInfobar">
         <router-view v-if="taskIsSelected">
           <div class="basic-container">
-            <p class="taskInfoTitle">任务详情：{{ Task_name }}</p>
+            <p class="taskInfoTitle">任务详情：</p>
             <div class="taskInfobarrightbutton">
               <button @click="taskexec" class="taskCreateButton">
                 任务执行
               </button>
-              <button @click="taskdele" class="taskdeleteButton">删除</button>
+              <button @click="handleTaskDelete" class="taskdeleteButton">
+                删除
+              </button>
             </div>
           </div>
           <div class="taskInfo">
             <div class="taskInfoUp">
-              <p class="span1">{{ Test_name }}</p>
+              <p class="span1">{{ Task_name }}</p>
               <p class="span2">当前状态：{{ taskInfo?.state }}</p>
               <p class="span3">越狱率：{{ taskInfo?.escapeRate }}</p>
               <div class="span4" v-if="finished">
@@ -69,6 +72,64 @@
         </router-view>
       </div>
     </div>
+    <el-dialog
+      v-model="TaskDeleDialog.visible"
+      :title="TaskDeleDialog.title"
+      width="500px"
+      @close="CloseTaskDeleDialog"
+    >
+      <div class="makesure">
+        <p>是否确定删除任务：{{ Task_name }} ?</p>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="taskdele">确 定</el-button>
+          <el-button @click="CloseTaskDeleDialog">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
+    <el-dialog
+      v-model="TaskCreateDialog.visible"
+      :title="TaskCreateDialog.title"
+      width="600px"
+      @close="CloseTaskDeleDialog"
+    >
+      <el-form
+        ref="TaskFormRef"
+        :model="formData"
+        :rules="rules"
+        label-width="100px"
+      >
+        <el-form-item label="任务名称" prop="taskname">
+          <el-input
+            v-model="formData.taskname"
+            placeholder="请输入任务名称"
+            maxlength="15"
+          />
+        </el-form-item>
+        <el-form-item label="测试名称" prop="testname">
+          <el-select v-model="formData.testname">
+            <el-option
+              v-for="test in Test_list"
+              :key="test.name"
+              :label="test.name"
+              :value="test.name"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <!-- <el-table :data="Test_list">
+        <el-table-column key="model" align="center" prop="model" />
+        <el-table-column key="collection" align="center" prop="evaluator" />
+        <el-table-column key="evaluator" align="center" prop="evaluator" />
+      </el-table> -->
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="taskcreate">确 定</el-button>
+          <el-button @click="CloseTaskCreateDialog">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -80,8 +141,9 @@ defineOptions({
 
 import MenuAPI, { MenuQuery, MenuForm, MenuVO } from "@/api/menu";
 import { MenuTypeEnum } from "@/enums/MenuTypeEnum";
-import TaskAPI, { TaskInfo, Tasklist } from "@/api/taskmanage";
-
+import TaskAPI, { TaskInfo, Tasklist, TestInfo } from "@/api/taskmanage";
+//import { useSettingsStore, useTagsViewStore } from "@/store";
+//const cachedViews = computed(() => useTagsViewStore().cachedViews); // 缓存页面
 const TaskListData = ref<Tasklist[]>();
 const loading = ref(false);
 const Task_name = ref<string | undefined>();
@@ -91,31 +153,54 @@ const Suite_name = "11";
 const Test_name = "test1";
 const finished = ref(false);
 const resultDownloadURL = ref<string>();
+const TaskFormRef = ref(ElForm);
+const Test_list = ref<TestInfo[] | undefined>();
+const Test_list_length = ref<number>();
+const formData = reactive({
+  taskname: "",
+  testname: "",
+});
+const rules = reactive({
+  taskname: [{ required: true, message: "请输入任务名称", trigger: "blur" }],
+  testname: [{ required: true, message: "请选择测试名称", trigger: "blur" }],
+});
 function taskcreate() {
-  TaskAPI.TaskCreate({
-    Suite_name: Suite_name,
-    Test_name: Test_name,
-    Task_name: Task_name.value,
-  })
-    .then((response) => {
-      console.info("TaskDele result:", response);
-    })
-    .catch((err) => {
-      console.info("TaskDele error", err);
-    });
+  TaskFormRef.value.validate((valid: any) => {
+    if (valid) {
+      TaskAPI.TaskCreate({
+        Suite_name: Suite_name,
+        Test_name: formData.testname,
+        Task_name: formData.taskname,
+      })
+        .then((response) => {
+          CloseTaskCreateDialog();
+          ElMessage.success("任务创建成功");
+          fetchData();
+        })
+        .catch((err) => {
+          console.info("TaskDele error", err);
+          ElMessage.error("任务创建失败！");
+        });
+    }
+  });
 }
 function taskdele() {
   TaskAPI.TaskDele({ Task_name: Task_name.value })
     .then((response) => {
       console.info("TaskDele result:", response);
+      ElMessage.success("任务删除成功");
     })
     .catch((err) => {
       console.info("TaskDele error", err);
+    })
+    .finally(() => {
+      CloseTaskDeleDialog();
     });
 }
 function taskexec() {
   TaskAPI.TaskExec({ Task_name: Task_name.value })
     .then((response) => {
+      ElMessage.success("任务执行成功");
       console.info("TaskExec result:", response);
     })
     .catch((err) => {
@@ -150,6 +235,10 @@ function handleRowClick(row: Tasklist) {
 }
 
 function fetchData() {
+  TaskAPI.gettestlist({ Suite_name: Suite_name }).then((data) => {
+    Test_list.value = data;
+    Test_list_length.value = data.length;
+  });
   TaskAPI.gettasklist({ Suite_name: Suite_name })
     .then((data) => {
       loading.value = true;
@@ -166,11 +255,34 @@ function fetchData() {
 const queryFormRef = ref(ElForm);
 const menuFormRef = ref(ElForm);
 
-const dialog = reactive({
-  title: "新增菜单",
+const TaskDeleDialog = reactive({
+  title: "任务删除",
   visible: false,
 });
-
+const TaskCreateDialog = reactive({
+  title: "任务创建",
+  visible: false,
+});
+// 打开任务删除弹窗
+function handleTaskDelete() {
+  TaskDeleDialog.visible = true;
+}
+// 关闭任务删除弹窗
+function CloseTaskDeleDialog() {
+  TaskDeleDialog.visible = false;
+}
+// 打开任务创建弹窗
+function handleTaskCreate() {
+  TaskCreateDialog.visible = true;
+}
+// 关闭任务创建弹窗
+function CloseTaskCreateDialog() {
+  TaskCreateDialog.visible = false;
+  TaskFormRef.value.resetFields();
+  TaskFormRef.value.clearValidate();
+  formData.taskname = "";
+  formData.testname = "";
+}
 // 查询参数
 const queryParams = reactive<MenuQuery>({});
 // 菜单表格数据
@@ -190,23 +302,6 @@ const initialMenuFormData = ref<MenuForm>({
   params: [],
 });
 
-// 菜单表单数据
-const formData = ref({ ...initialMenuFormData.value });
-
-// 表单验证规则
-// const rules = reactive({
-//   parentId: [{ required: true, message: "请选择顶级菜单", trigger: "blur" }],
-//   name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
-//   type: [{ required: true, message: "请选择菜单类型", trigger: "blur" }],
-//   routeName: [{ required: true, message: "请输入路由名称", trigger: "blur" }],
-//   routePath: [{ required: true, message: "请输入路由路径", trigger: "blur" }],
-//   component: [{ required: true, message: "请输入组件路径", trigger: "blur" }],
-//   visible: [{ required: true, message: "请输入路由路径", trigger: "blur" }],
-// });
-
-// 选择表格的行菜单ID
-const selectedMenuId = ref<number | undefined>();
-
 // 查询
 function handleQuery() {
   loading.value = true;
@@ -225,78 +320,18 @@ function handleResetQuery() {
   handleQuery();
 }
 
-// 行点击事件
-// function handleRowClick(row: MenuVO) {
-//   // 记录表格选择的菜单ID，新增子菜单作为父菜单ID
-//   selectedMenuId.value = row.id;
-// }
-
 /**
  * 打开表单弹窗
  *
  * @param parentId 父菜单ID
  * @param menuId 菜单ID
  */
-function handleOpenDialog(parentId?: number, menuId?: number) {
-  MenuAPI.getOptions()
-    .then((data) => {
-      menuOptions.value = [{ value: 0, label: "顶级菜单", children: data }];
-    })
-    .then(() => {
-      dialog.visible = true;
-      if (menuId) {
-        dialog.title = "编辑菜单";
-        MenuAPI.getFormData(menuId).then((data) => {
-          initialMenuFormData.value = { ...data };
-          formData.value = data;
-        });
-      } else {
-        dialog.title = "新增菜单";
-        formData.value.parentId = parentId;
-      }
-    });
-}
 
-// 删除菜单
-function handleDelete(menuId: number) {
-  if (!menuId) {
-    ElMessage.warning("请勾选删除项");
-    return false;
-  }
-
-  ElMessageBox.confirm("确认删除已选中的数据项?", "警告", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    type: "warning",
-  }).then(
-    () => {
-      loading.value = true;
-      MenuAPI.deleteById(menuId)
-        .then(() => {
-          ElMessage.success("删除成功");
-          handleQuery();
-        })
-        .finally(() => {
-          loading.value = false;
-        });
-    },
-    () => {
-      ElMessage.info("已取消删除");
-    }
-  );
-}
-
-// 关闭弹窗
-function handleCloseDialog() {
-  dialog.visible = false;
-  menuFormRef.value.resetFields();
-  menuFormRef.value.clearValidate();
-  formData.value.id = undefined;
-}
 onMounted(() => {
   fetchData();
 });
 </script>
+
 <style>
 .el-table .el-table__row > td {
   border-bottom: none;
@@ -318,5 +353,17 @@ td {
   word-wrap: break-word;
   word-break: break-all;
   max-height: 100%;
+}
+.el-dialog__title {
+  font-size: 14px;
+  color: grey;
+}
+.makesure {
+  color: rgb(77, 76, 76);
+  font-size: 16px;
+  text-align: center;
+}
+.el-form-item {
+  margin-right: 50px;
 }
 </style>

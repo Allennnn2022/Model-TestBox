@@ -10,6 +10,14 @@ class TaskAPI {
       params: query,
     });
   }
+  static gettestlist(query: object) {
+    return request<any, TestInfo[]>({
+      //url: `${SERVER_URL}/user`,
+      url: `${USER_BASE_URL}/TestShow`,
+      method: "get",
+      params: query,
+    });
+  }
   static gettaskinfo(query: object) {
     return request<any, TaskInfo>({
       //url: `${SERVER_URL}/user`,
@@ -60,7 +68,9 @@ export interface TaskInfo {
   // 越狱率
   escapeRate?: string;
 }
-export interface postReturn {
-  code?: string;
-  msg?: string;
+export interface TestInfo {
+  name?: string;
+  collection?: string;
+  model?: string;
+  evaluator?: string;
 }

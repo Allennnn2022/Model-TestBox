@@ -81,6 +81,34 @@ export default defineMock([
     },
   },
   {
+    url: "users/TestShow",
+    method: ["GET"],
+    body: {
+      code: "00000",
+      data: [
+        {
+          name: "Test1",
+          collection: "dataset1",
+          model: "gpt-4",
+          evaluator: "gpt-4",
+        },
+        {
+          name: "Test2",
+          collection: "dataset2",
+          model: "gpt-3",
+          evaluator: "gpt-3",
+        },
+        {
+          name: "Test3",
+          collection: "dataset3",
+          model: "gpt-2",
+          evaluator: "gpt-2",
+        },
+      ],
+      msg: "一切ok",
+    },
+  },
+  {
     url: "users/TaskShow",
     method: ["GET"],
     body: {
@@ -115,6 +143,7 @@ export default defineMock([
     method: ["POST"],
     body({ query }) {
       return {
+        code: "00000",
         msg: "Task " + query.Task_name + " Execute Succseefully",
       };
     },
@@ -124,6 +153,7 @@ export default defineMock([
     method: ["POST"],
     body({ query }) {
       return {
+        code: "00000",
         msg: "Task" + query.Task_name + " Delete Succseefully",
       };
     },
@@ -133,6 +163,7 @@ export default defineMock([
     method: ["POST"],
     body({ query }) {
       return {
+        code: "00000",
         msg: "Task" + query.Task_name + " Create Succseefully",
       };
     },
