@@ -134,7 +134,10 @@ export default defineMock([
     method: ["GET"],
     body: {
       code: "00000",
-      data: { Task_Result: "www.baidu.com" },
+      data: {
+        Task_Result:
+          "https://nvd.nist.gov/vuln/search/results?form_type=Basic&results_type=overview&query=MsQuic&search_type=all&isCpeNameSearch=false",
+      },
       msg: "一切ok",
     },
   },

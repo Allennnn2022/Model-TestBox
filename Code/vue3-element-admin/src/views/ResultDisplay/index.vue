@@ -3,9 +3,7 @@
     <div class="titlebar">
       <p class="title">任务管理</p>
       <div class="titlebarrightbutton">
-        <button @click="handleTaskCreate" class="taskCreateButton">
-          任务创建
-        </button>
+        <button @click="handleTaskCreate" class="taskCreateButton">任务创建</button>
       </div>
     </div>
     <div class="taskbar">
@@ -32,12 +30,8 @@
           <div class="basic-container">
             <p class="taskInfoTitle">任务详情：</p>
             <div class="taskInfobarrightbutton">
-              <button @click="taskexec" class="taskCreateButton">
-                任务执行
-              </button>
-              <button @click="handleTaskDelete" class="taskdeleteButton">
-                删除
-              </button>
+              <button @click="taskexec" class="taskCreateButton">任务执行</button>
+              <button @click="handleTaskDelete" class="taskdeleteButton">删除</button>
             </div>
           </div>
           <div class="taskInfo">
@@ -47,24 +41,35 @@
               <p class="span3">越狱率：{{ taskInfo?.escapeRate }}</p>
               <div class="span4" v-if="finished">
                 <button @click="resultDownload">结果下载</button>
+                <!-- <a href="resultDownloadURL.value" :download="Task_name">
+                  <button @click="resultDownload">结果下载</button>
+                </a> -->
               </div>
             </div>
             <div class="divide-lightgrey"></div>
             <div class="taskInfoDown">
               <div class="taskModel">
-                <thead font-550>目标模型</thead>
+                <thead font-550>
+                  目标模型
+                </thead>
                 <td>目sssssssssssssaaaaaaaaaaaa11</td>
               </div>
               <div class="taskDataset">
-                <thead font-550>数据集</thead>
+                <thead font-550>
+                  数据集
+                </thead>
                 <td>目sssssssssssssaaaaaaaaaaaa11</td>
               </div>
               <div v-bind="taskInfo" class="taskEval">
-                <thead font-550>评估器</thead>
+                <thead font-550>
+                  评估器
+                </thead>
                 <td>{{ taskInfo?.state }}</td>
               </div>
               <div class="taskAttackType">
-                <thead font-550>攻击类型</thead>
+                <thead font-550>
+                  攻击类型
+                </thead>
                 <td>幻觉攻击</td>
               </div>
             </div>
@@ -94,12 +99,7 @@
       width="600px"
       @close="CloseTaskDeleDialog"
     >
-      <el-form
-        ref="TaskFormRef"
-        :model="formData"
-        :rules="rules"
-        label-width="100px"
-      >
+      <el-form ref="TaskFormRef" :model="formData" :rules="rules" label-width="100px">
         <el-form-item label="任务名称" prop="taskname">
           <el-input
             v-model="formData.taskname"
@@ -138,7 +138,7 @@ defineOptions({
   name: "TaskManage",
   inheritAttrs: false,
 });
-
+import { ref } from "vue";
 import MenuAPI, { MenuQuery, MenuForm, MenuVO } from "@/api/menu";
 import { MenuTypeEnum } from "@/enums/MenuTypeEnum";
 import TaskAPI, { TaskInfo, Tasklist, TestInfo } from "@/api/taskmanage";
@@ -146,16 +146,17 @@ import TaskAPI, { TaskInfo, Tasklist, TestInfo } from "@/api/taskmanage";
 //const cachedViews = computed(() => useTagsViewStore().cachedViews); // 缓存页面
 const TaskListData = ref<Tasklist[]>();
 const loading = ref(false);
-const Task_name = ref<string | undefined>();
 const taskIsSelected = ref(false);
 const taskInfo = ref<TaskInfo>();
+const Task_name = ref<string | undefined>();
 const Suite_name = "11";
 const Test_name = "test1";
 const finished = ref(false);
-const resultDownloadURL = ref<string>();
+const resultDownloadURL = ref<string | undefined>();
 const TaskFormRef = ref(ElForm);
 const Test_list = ref<TestInfo[] | undefined>();
 const Test_list_length = ref<number>();
+const Download_Name = ref<string>();
 const formData = reactive({
   taskname: "",
   testname: "",
@@ -207,11 +208,34 @@ function taskexec() {
       console.info("TaskExec error", err);
     });
 }
-function resultDownload() {
-  TaskAPI.TaskResult({ Task_name: Task_name.value })
+async function resultDownload() {
+  await TaskAPI.TaskResult({ Task_name: Task_name.value })
     .then((URL) => {
-      resultDownloadURL.value = URL;
-      console.info("TaskResultDownloadURL", URL);
+      resultDownloadURL.value = URL.Task_Result;
+      console.info("TaskResultDownloadURL", resultDownloadURL);
+      // const link = document.createElement("a");
+      // link.href = resultDownloadURL.value || "";
+      // link.download = Task_name.value || "";
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+      // // Download_Name.value = Task_name.value + ".html";
+      fetch(resultDownloadURL.value || "")
+        .then((response) => response.text()) // 获取页面内容
+        .then((html) => {
+          const blob = new Blob([html], { type: "text/html" });
+          const link = document.createElement("a");
+          const url = window.URL.createObjectURL(blob);
+          link.href = url;
+          link.download = Task_name.value + ".html" || "download.html"; // 设置下载文件名
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        })
+        .catch((err) => {
+          console.info("Fetch error", err);
+        });
     })
     .catch((err) => {
       console.info("TaskResultDownload error", err);

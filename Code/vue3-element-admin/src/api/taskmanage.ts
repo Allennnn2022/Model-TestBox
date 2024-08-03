@@ -27,7 +27,7 @@ class TaskAPI {
     });
   }
   static TaskResult(query: object) {
-    return request<any, string>({
+    return request<any, { Task_Result?: string }>({
       url: `${USER_BASE_URL}/TaskResult`,
       method: "get",
       params: query,
