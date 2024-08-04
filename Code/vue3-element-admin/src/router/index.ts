@@ -35,7 +35,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         path: "resultdisplay",
         component: () => import("@/views/ResultDisplay/index.vue"),
         name: "ResultDisplay",
-        meta: { title: "结果展示" },
+        meta: { title: "任务管理" },
         // children: [
         //   {
         //     path: "taskinfo",

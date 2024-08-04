@@ -102,7 +102,7 @@ const data = [
       {
         path: "resultdisplay",
         meta: {
-          title: "结果展示",
+          title: "任务管理",
           icon: "el-icon-ElementPlus",
           hidden: false,
           alwaysShow: false,
