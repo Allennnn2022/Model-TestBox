@@ -60,6 +60,7 @@
   height: 35px;
   border-color: rgb(71, 160, 250);
   margin-left: 15px;
+  cursor: pointer;
 }
 .taskdeleteButton {
   display: inline-block;
@@ -115,7 +116,7 @@
   margin-top: 15px;
   margin-left: 32px;
   margin-right: 18px;
-  height: 200px;
+  height: fit-content;
   box-shadow: var(--el-box-shadow-light);
   border-radius: 5px;
   padding: 10px;
@@ -123,6 +124,7 @@
 .taskInfoUp {
   padding: 15px;
   height: 30%;
+  text-align: start;
 }
 .divide-lightgrey {
   border: 1px;
@@ -141,12 +143,12 @@
 }
 .taskDataset {
   display: inline-block;
-  width: 50%;
+  width: 45%;
   height: 100%;
 }
 .taskEval {
   display: inline-block;
-  width: 14%;
+  width: 19%;
   height: 100%;
 }
 .taskAttackType {
@@ -177,10 +179,14 @@
   text-align: right;
 }
 .span4 > button {
-  width: 70px;
-  height: 30px;
+  display: inline-block;
+  width: 75px;
+  height: 22px;
   color: grey;
-  border: lightgrey;
+  border: rgb(185, 185, 185);
+}
+.task {
+  width: 50%;
 }
 .link-type,
 .link-type:focus {

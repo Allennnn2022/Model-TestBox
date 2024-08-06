@@ -1,9 +1,16 @@
-import request from "@/utils/request";
+//import request from "@/utils/request";
 //import SERVER_URL from "@/App.vue";
-const USER_BASE_URL = "/api/v1/users";
+import axios, { InternalAxiosRequestConfig, AxiosResponse } from "axios";
+const USER_BASE_URL = "api";
+
+const request = axios.create({
+  baseURL: "http://192.168.132.139",
+  timeout: 50000,
+  headers: { "Content-Type": "application/json;charset=utf-8" },
+});
 class TaskAPI {
   static gettasklist(query: object) {
-    return request<any, Tasklist[]>({
+    return request({
       //url: `${SERVER_URL}/user`,
       url: `${USER_BASE_URL}/TaskShow`,
       method: "get",
@@ -11,7 +18,7 @@ class TaskAPI {
     });
   }
   static gettestlist(query: object) {
-    return request<any, TestInfo[]>({
+    return request({
       //url: `${SERVER_URL}/user`,
       url: `${USER_BASE_URL}/TestShow`,
       method: "get",
@@ -19,7 +26,7 @@ class TaskAPI {
     });
   }
   static gettaskinfo(query: object) {
-    return request<any, TaskInfo>({
+    return request({
       //url: `${SERVER_URL}/user`,
       url: `${USER_BASE_URL}/TaskInfo`,
       method: "get",
@@ -27,31 +34,31 @@ class TaskAPI {
     });
   }
   static TaskResult(query: object) {
-    return request<any, { Task_Result?: string }>({
+    return request({
       url: `${USER_BASE_URL}/TaskResult`,
       method: "get",
       params: query,
     });
   }
   static TaskExec(query: object) {
-    return request<any, string>({
+    return request({
       url: `${USER_BASE_URL}/TaskExec`,
       method: "post",
-      params: query,
+      data: query,
     });
   }
   static TaskDele(query: object) {
     return request<any, string>({
       url: `${USER_BASE_URL}/TaskDele`,
       method: "post",
-      params: query,
+      data: query,
     });
   }
   static TaskCreate(query: object) {
     return request<any, string>({
       url: `${USER_BASE_URL}/TaskCreate`,
       method: "post",
-      params: query,
+      data: query,
     });
   }
 }
@@ -63,9 +70,12 @@ export interface Tasklist {
   state?: string;
 }
 export interface TaskInfo {
-  // 任务状态
+  name?: string;
+  collection?: string;
+  model?: string;
+  evaluator?: string;
+  cate?: string;
   state?: string;
-  // 越狱率
   escapeRate?: string;
 }
 export interface TestInfo {
@@ -73,4 +83,6 @@ export interface TestInfo {
   collection?: string;
   model?: string;
   evaluator?: string;
+  cate?: string;
+  state?: string;
 }

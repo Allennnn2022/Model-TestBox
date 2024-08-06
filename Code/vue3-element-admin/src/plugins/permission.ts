@@ -14,14 +14,14 @@ export function setupPermission() {
   const whiteList = ["/login"];
 
   router.beforeEach(async (to, from, next) => {
-    NProgress.start();
+    //NProgress.start();
     const hasToken = localStorage.getItem(TOKEN_KEY);
 
     if (hasToken) {
       if (to.path === "/login") {
         // 如果已登录，跳转到首页
         next({ path: "/" });
-        NProgress.done();
+        // NProgress.done();
       } else {
         const userStore = useUserStore();
         const hasRoles =
@@ -53,7 +53,7 @@ export function setupPermission() {
             // 移除 token 并重定向到登录页，携带当前页面路由作为跳转参数
             await userStore.resetToken();
             redirectToLogin(to, next);
-            NProgress.done();
+            //NProgress.done();
           }
         }
       }
@@ -64,13 +64,13 @@ export function setupPermission() {
       } else {
         // 不在白名单，重定向到登录页
         redirectToLogin(to, next);
-        NProgress.done();
+        //NProgress.done();
       }
     }
   });
 
   router.afterEach(() => {
-    NProgress.done();
+    //NProgress.done();
   });
 }
 
