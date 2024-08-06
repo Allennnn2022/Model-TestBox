@@ -44,7 +44,7 @@ pnpm run dev
 
 
 
-## 项目部署
+## 代码结构
 
 ```bash
 ├─api #发包api
@@ -148,6 +148,7 @@ pnpm run dev
 
 - [ESLint+Prettier+Stylelint+EditorConfig 约束和统一前端代码规范](https://blog.csdn.net/u013737132/article/details/130190788)
 - [Husky + Lint-staged + Commitlint + Commitizen + cz-git 配置 Git 提交规范](https://blog.csdn.net/u013737132/article/details/130191363)
+- [vue-element-admin 项目文档](https://panjiachen.github.io/vue-element-admin-site/zh/guide/essentials/layout.html#layout)
 
 
 
