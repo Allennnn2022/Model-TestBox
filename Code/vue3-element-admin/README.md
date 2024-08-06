@@ -17,10 +17,11 @@
 | 环境                 | 名称版本                                                     | 
 | -------------------- | :----------------------------------------------------------- | 
 | **开发工具**         | VSCode    | 
-|         | Node ≥18 (其中 20.6.0 版本不可用)  | 
-| **运行环境**         | npm 10.7.0    |
-|                     |
-|                     |
+| **运行环境**         | Node ≥18 (其中 20.6.0 版本不可用)  | 
+|                     | npm 10.7.0    |
+|                     | vue @3.4.35 |
+|                     |  vue-router @4.4.2 |
+|                     | vite @5.3.5 |
 
 
 ## 项目启动
@@ -46,26 +47,76 @@ pnpm run dev
 ## 项目部署
 
 ```bash
-# 项目打包
-pnpm run build
-
-# 上传文件至远程服务器
-将打包生成在 `dist` 目录下的文件拷贝至 `/usr/share/nginx/html` 目录
-
-# nginx.cofig 配置
-server {
-	listen     80;
-	server_name  localhost;
-	location / {
-			root /usr/share/nginx/html;
-			index index.html index.htm;
-	}
-	# 反向代理配置
-	location /prod-api/ {
-            # vapi.youlai.tech 替换后端API地址，注意保留后面的斜杠 /
-            proxy_pass http://vapi.youlai.tech/; 
-	}
-}
+├─api
+├─assets
+│  ├─icons
+│  └─images
+├─components
+│  ├─AppLink
+│  ├─Breadcrumb
+│  ├─CopyButton
+│  ├─CURD
+│  ├─Dictionary
+│  ├─GithubCorner
+│  ├─Hamburger
+│  ├─IconSelect
+│  ├─LangSelect
+│  ├─Pagination
+│  ├─SizeSelect
+│  ├─SvgIcon
+│  ├─TableSelect
+│  ├─Upload
+│  └─WangEditor
+├─directive
+│  └─permission
+├─enums
+├─lang
+│  └─package
+├─layout
+│  └─components
+│      ├─AppMain
+│      ├─NavBar
+│      │  └─components
+│      ├─Settings
+│      │  └─components
+│      ├─Sidebar
+│      │  └─components
+│      └─TagsView
+├─plugins
+├─router
+├─store
+│  └─modules
+├─styles
+├─types
+├─utils
+└─views
+    ├─dashboard
+    │  └─components
+    ├─DatasetManage
+    ├─demo
+    │  ├─api
+    │  ├─curd
+    │  │  └─config
+    │  ├─multi-level
+    │  │  └─children
+    │  │      └─children
+    │  └─table-select
+    │      └─config
+    ├─error-page
+    ├─login
+    ├─redirect
+    ├─ResultDisplay
+    │  └─components
+    ├─system
+    │  ├─dept
+    │  ├─dict
+    │  ├─log
+    │  ├─menu
+    │  ├─role
+    │  ├─TestManage
+    │  └─user
+    │      └─components
+    └─TestManage
 ```
 
 ## 本地Mock
