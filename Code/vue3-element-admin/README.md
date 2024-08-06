@@ -47,11 +47,9 @@ pnpm run dev
 ## 项目部署
 
 ```bash
-├─api
-├─assets
-│  ├─icons
-│  └─images
-├─components
+├─api #发包api
+├─assets #素材库
+├─components #共享组件
 │  ├─AppLink
 │  ├─Breadcrumb
 │  ├─CopyButton
@@ -68,32 +66,31 @@ pnpm run dev
 │  ├─Upload
 │  └─WangEditor
 ├─directive
-│  └─permission
+│  └─permission 
 ├─enums
 ├─lang
-│  └─package
-├─layout
+├─layout #布局组件
 │  └─components
-│      ├─AppMain
-│      ├─NavBar
+│      ├─AppMain #页面显示区域
+│      ├─NavBar #导航栏
 │      │  └─components
 │      ├─Settings
 │      │  └─components
-│      ├─Sidebar
+│      ├─Sidebar #侧边栏
 │      │  └─components
 │      └─TagsView
 ├─plugins
-├─router
-├─store
+├─router #静态路由声明
+├─store #缓存
 │  └─modules
-├─styles
+├─styles #样式库
 ├─types
-├─utils
+├─utils #工具库，request文件中有封装好的axios，使用mock时拦截网络包
 └─views
-    ├─dashboard
+    ├─dashboard #首页
     │  └─components
-    ├─DatasetManage
-    ├─demo
+    ├─DatasetManage #数据管理
+    ├─demo 
     │  ├─api
     │  ├─curd
     │  │  └─config
@@ -102,12 +99,12 @@ pnpm run dev
     │  │      └─children
     │  └─table-select
     │      └─config
-    ├─error-page
-    ├─login
-    ├─redirect
-    ├─ResultDisplay
+    ├─error-page #错误页
+    ├─login #登录页
+    ├─redirect #重定向代码
+    ├─ResultDisplay #任务管理
     │  └─components
-    ├─system
+    ├─system 
     │  ├─dept
     │  ├─dict
     │  ├─log
@@ -116,12 +113,14 @@ pnpm run dev
     │  ├─TestManage
     │  └─user
     │      └─components
-    └─TestManage
+    └─TestManage #测试管理
 ```
-
 ## 本地Mock
 
 项目同时支持在线和本地 Mock 接口，默认使用线上接口，如需替换为本地 Mock 接口，修改文件 `.env.development` 的 `VITE_MOCK_DEV_SERVER` 为  `true` **即可**。
+## 本地Mock + 后端接口
+
+本项目代码保留vue3-element-admin中的login登录页面，需要通过路由守卫才能进入首页。登录所用账号数据及验证码仍使用mock数据，即调用@/utils/request.ts中的request进行发包。ResultDisplay中使用的发包api封装在@/api/testmanage.ts中，自行创建了axios，baseURL设置为服务器地址即可实现该部分api发包给服务器。
 
 ## 注意事项
 
