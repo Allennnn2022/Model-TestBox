@@ -3,9 +3,6 @@
     <img src="https://img.shields.io/badge/Vite-5.3.1-green.svg"/>
     <img src="https://img.shields.io/badge/Element Plus-2.7.5-blue.svg"/>
     <img src="https://img.shields.io/badge/license-MIT-green.svg"/>
-    <a href="https://gitee.com/youlaiorg" target="_blank">
-        <img src="https://img.shields.io/badge/Author-有来开源组织-orange.svg"/>
-    </a>
     <div align="center"> 中文 | <a href="./README.en-US.md">English</div>
 </div>
 
@@ -15,47 +12,15 @@
   <a target="_blank" href="http://vue3.youlai.tech">👀 在线预览</a> |  <a target="_blank" href="https://juejin.cn/post/7228990409909108793">📖 阅读文档</a>  
 </div>
 
-## 项目简介
-
-[vue3-element-admin](https://gitee.com/youlaiorg/vue3-element-admin) 是基于 Vue3 + Vite5+ TypeScript5 + Element-Plus + Pinia 等主流技术栈构建的免费开源的后台管理前端模板（配套[后端源码](https://gitee.com/youlaiorg/youlai-boot)）。
-
-
-## 项目特色
-
-- **简洁易用**：基于 [vue-element-admin](https://gitee.com/panjiachen/vue-element-admin) 升级的 Vue3 版本，无过渡封装 ，易上手。
-
-- **数据交互**：同时支持本地 `Mock` 和线上接口，配套 [Java 后端源码](https://gitee.com/youlaiorg/youlai-boot)和[在线接口文档](https://www.apifox.cn/apidoc/shared-195e783f-4d85-4235-a038-eec696de4ea5)。
-
-- **权限管理**：用户、角色、菜单、字典、部门等完善的权限系统功能。
-
-- **基础设施**：动态路由、按钮权限、国际化、代码规范、Git 提交规范、常用组件封装。
-
-- **持续更新**：项目持续开源更新，实时更新工具和依赖。
-
-
-
-## 项目预览
-
-![明亮模式](https://foruda.gitee.com/images/1709651876583793739/0ba1ee1c_716974.png)
-
-![暗黑模式](https://foruda.gitee.com/images/1709651875494206224/2a2b0b53_716974.png)
-
-![接口文档](https://foruda.gitee.com/images/1687755822857820115/96054330_716974.png)
-
-## 项目地址
-
-| 项目 | Gitee                                                        | Github                                                       | 
-| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | 
-| 前端 | [vue3-element-admin](https://gitee.com/youlaiorg/vue3-element-admin) | [vue3-element-admin](https://github.com/youlaitech/vue3-element-admin) | [vue3-element-admin](https://gitcode.net/youlai/vue3-element-admin) |
-| 精简版 | [vue3-element-admin-thin](https://gitee.com/cshaptx4869/vue3-element-admin-thin) | [vue3-element-admin-thin](https://github.com/youlaitech/vue3-element-admin-thin) |
-| 后端 | [youlai-boot](https://gitee.com/youlaiorg/youlai-boot)       | [youlai-boot](https://github.com/haoxianrui/youlai-boot.git) |
-
 ## 环境准备
 
-| 环境                 | 名称版本                                                     | 下载地址                                                     |
-| -------------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
-| **开发工具**         | VSCode    | [下载](https://code.visualstudio.com/Download)           |
-| **运行环境**         | Node ≥18 (其中 20.6.0 版本不可用)    | [下载](http://nodejs.cn/download)                        |
+| 环境                 | 名称版本                                                     | 
+| -------------------- | :----------------------------------------------------------- | 
+| **开发工具**         | VSCode    | 
+| **运行环境**         | Node ≥18 (其中 20.6.0 版本不可用)    | 
+|                     | npm 10.7.0    |
+|                     |
+|                     |
 
 
 ## 项目启动
